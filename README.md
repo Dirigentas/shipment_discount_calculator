@@ -4,7 +4,7 @@
 
 -   Backend Homework Assignment
 
-## 🎯 Project features/goals from task notes
+## 🎯 Project features/goals from task requirements
 
 -   clean and simple code
 -   covered with unit tests

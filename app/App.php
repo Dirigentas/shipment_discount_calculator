@@ -52,11 +52,11 @@ class App
         $data;
         // $name;
 
-        // require __DIR__ . '/../view/header.php';
+        require __DIR__ . '/../view/header.php';
 
         require __DIR__ . '/../view/' . $__name . '.php';
         
-        // require __DIR__ . '/../view/footer.php';
+        require __DIR__ . '/../view/footer.php';
 
         //sukaptų duomenų įdėjimas į kintamąjį ir atminties išvalymas
         $out = ob_get_contents();

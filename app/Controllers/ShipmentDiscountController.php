@@ -15,9 +15,9 @@ class ShipmentDiscountController
      */
     public function index(): string
     {
-        $fileNames = FileReader::getFilesNames();
+        $data = FileReader::getFileData('input.txt');
 
-        return App::view('output', $fileNames);
+        return App::view('output', $data);
     }
 }
 
