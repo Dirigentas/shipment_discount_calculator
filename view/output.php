@@ -1,5 +1,3 @@
-<!-- išrikiuojami visi į prokjektą sukelti failai  -->
-<!-- Atsiradus naujiems failas sąrašas automatiškai pasipildo -->
 <div class='container'>
     <h1>shipment discount calculation</h1>
     <div class='flex'>

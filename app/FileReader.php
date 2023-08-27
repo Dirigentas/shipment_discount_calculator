@@ -7,22 +7,16 @@ namespace ShipmentDiscount;
 class FileReader
 {
     /**
-     * Gaunami pasirinkto failo duomenys bei apdorojami pagal priklausomai nuofailo plėtinio
-     * @param string gaunamas pasirinkto failo pavadinimas
-     * @return array tiek sėkmės, tiek nesėkmės atveju gaunamas masyvas
+     * Get data from 'input.txt' file and then place data to array
+     * @param string of the file name
+     * @return array of transactions
      */
-    public static function getFileData(string $fileName)
+    public static function getFileData(string $fileName): array
     {
         $data = file_get_contents('./../public/' . $fileName);
+
         $data = explode("\n", $data);
 
-        //priklausomai nuo pasirinkto failo yra pasirenkamas failo apdorojimo būdas
-        // $data = match (substr($fileName, -4)) {
-        //     '.xml' => json_decode(json_encode(simplexml_load_string($data)), true),
-        //     '.csv' => csv($data),
-        //     'json' => json_decode($data, true),
-        //     default => ['Failo formatas netinkamas, prašome pakoreguoti failo plėtinį'],
-        // };
         return $data;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-// declare(strict_types=1);
+declare(strict_types=1);
 
-// paimti ir dekoduoti konduktoriaus duomenys
+// taken and decoded data from conductor.json 
 if (@file_get_contents('./autoloader/conductor.json')) {
     $configuration = json_decode(
         file_get_contents('./autoloader/conductor.json'),
@@ -15,7 +15,7 @@ if (@file_get_contents('./autoloader/conductor.json')) {
     );
 }
 
-// nustatoma vieta kur padėti namespaces
+// determines the location of namespaces
 $namespaces = $configuration['autoload']['psr-4'];
 
 
@@ -25,7 +25,7 @@ function fqcnToPath(string $fqcn, string $prefix): string {
     return str_replace('\\', '/', $relativeClass) . '.php';
 }
 
-// autoload registracija ir jo apdorojimas
+// autoload registration and processing
 spl_autoload_register(function (string $class) use ($namespaces) {
     $prefix = strtok($class, '\\') . '\\';
 

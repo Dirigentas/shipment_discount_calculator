@@ -10,8 +10,8 @@ use ShipmentDiscount\App;
 class ShipmentDiscountController
 {
     /** 
-     * Atvaizduojami visi projekte public/files direktorijoje esantys failų pavadinimai
-     * @return string view metodas
+     * Redirects to FileReader class to get data from 'input.txt' and returns view file
+     * @return string view method, from view directory, file named 'output'
      */
     public function index(): string
     {

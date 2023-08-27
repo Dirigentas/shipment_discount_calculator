@@ -6,13 +6,14 @@ namespace ShipmentDiscount;
 
 use ShipmentDiscount\Controllers\ShipmentDiscountController;
 
-//puslapio valdymo klasė
+/**
+ * page control class
+ */
 class App
 {
     /**
-     * suskaldo URL ties kiekvienu slash'u
-     * 
-     * @return string nukreipimas į statini metodą
+     * breaks the URL at each slash
+     * @return string redirecting to the static method
      */
     public static function start(): string
     {
@@ -22,9 +23,9 @@ class App
     }
     
     /**
-     * pagal suskaldytas URL dalis atlieka nukreipimus į reikiamas klases
-     * @param array gauna jau suskaldytą URL
-     * @return string jei tenkinamos sąlygos, padaro nukreipimą, jei ne gauname informaciją apie nerastą kelią
+     * according to the split URL parts redirects to the necessary cotrollers methods
+     * @param array gets an already split URL
+     * @return string if the conditions are met, it does a redirect, if not we get information about a path not found
      */
     private static function router(array $url): string
     {
@@ -37,20 +38,17 @@ class App
     }
 
     /**
-     * pagal suskaldytas URL dalis atlieka nukreipimus į reikiamas klases
-     * @param string reikalingo naudotiti View failo pavadinimas
-     * @param array/string failo duomenys arba failo pavadinimas
-     * @param string/null vienas iš nukrepimų paduoda pasirinkto failo pavadinimą
-     * @return string jei tenkinamos sąlygos, padaro nukreipimą, jei ne gauname informaciją apir nerastą kelią
+     * 
+     * @param string $_name, the name of the View file to be used
+     * @param array $data, the data being transferred
+     * @return string if the conditions are met, it does a redirect, if not we get information about a path not found
      */
-    public static function view(string $__name, $data, string $name = 'null'): string
+    public static function view(string $__name, array $data): string
     {
-        //reikalinga tam, kad nekeliautų iš karto duomenys, o tik tuomet kai surenkame visą reikalingą info
+        // necessary so that the data does not travel immediately, but only when we collect all the necessary information
         ob_start();
         
-        //perduodami duomenys View failams
         $data;
-        // $name;
 
         require __DIR__ . '/../view/header.php';
 
@@ -58,7 +56,7 @@ class App
         
         require __DIR__ . '/../view/footer.php';
 
-        //sukaptų duomenų įdėjimas į kintamąjį ir atminties išvalymas
+        // putting accumulated data into a variable and clearing memory
         $out = ob_get_contents();
         ob_end_clean();
 
