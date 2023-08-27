@@ -10,14 +10,15 @@ use ShipmentDiscount\App;
 class ShipmentDiscountController
 {
     /** 
-     * Redirects to FileReader class to get data from 'input.txt' and returns view file
+     * Redirects to FileReader class to get data from 'input.txt' than returns view method
+     * 
      * @return string view method, from view directory, file named 'output'
      */
     public function index(): string
     {
         $data = FileReader::getFileData('input.txt');
 
-        return App::view('output', $data);
+        return App::view('index', $data);
     }
 }
 

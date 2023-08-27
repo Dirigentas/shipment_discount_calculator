@@ -7,12 +7,13 @@ namespace ShipmentDiscount;
 use ShipmentDiscount\Controllers\ShipmentDiscountController;
 
 /**
- * page control class
+ * Webpage control class
  */
 class App
 {
     /**
-     * breaks the URL at each slash
+     * Breaks the URL at each slash
+     * 
      * @return string redirecting to the static method
      */
     public static function start(): string
@@ -23,7 +24,8 @@ class App
     }
     
     /**
-     * according to the split URL parts redirects to the necessary cotrollers methods
+     * According to the split URL parts redirects to the necessary cotrollers methods
+     * 
      * @param array gets an already split URL
      * @return string if the conditions are met, it does a redirect, if not we get information about a path not found
      */
@@ -38,9 +40,10 @@ class App
     }
 
     /**
+     * This function takes all data and transfers it to the necessary 'view' file
      * 
-     * @param string $_name, the name of the View file to be used
-     * @param array $data, the data being transferred
+     * @param string $_name The name of the View file to be used
+     * @param array $data The data being transferred to 'view' file
      * @return string if the conditions are met, it does a redirect, if not we get information about a path not found
      */
     public static function view(string $__name, array $data): string
@@ -48,7 +51,8 @@ class App
         // necessary so that the data does not travel immediately, but only when we collect all the necessary information
         ob_start();
         
-        $data;
+        $input;
+        $output;
 
         require __DIR__ . '/../view/header.php';
 

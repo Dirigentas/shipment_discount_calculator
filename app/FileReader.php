@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ShipmentDiscount;
 
+use ShipmentDiscount\InputProcessing;
+
 class FileReader
 {
     /**
@@ -13,11 +15,11 @@ class FileReader
      */
     public static function getFileData(string $fileName): array
     {
-        $data = file_get_contents('./../public/' . $fileName);
+        $input = file_get_contents('./../public/' . $fileName);
 
-        $data = explode("\n", $data);
+        $input = explode("\n", $input);
 
-        return $data;
+        return InputProcessing::dataVerification($input);
     }
 }
 
