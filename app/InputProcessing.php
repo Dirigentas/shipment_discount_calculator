@@ -7,15 +7,20 @@ namespace ShipmentDiscount;
 class InputProcessing
 {
     /**
-     * Verifies if transactions data format is correct
+     * Verifies if transactions data format is correct: date format, size, courier
      * 
-     * @param 
-     * @return
+     * @param array $input Data from 'input.txt' file
+     * @return array[] $arrayOfArrays An array of 'input' and 'output' arrays
      */
     public static function dataVerification(array $input): array
     { 
         // Regular expression to match valid ISO 8601 date format (YYYY-MM-DD)
         $isoPattern = "/^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/";
+
+        // Control panel: all possible sizes and couriers, add new or modify existing ones 
+        $sizes = ['S', 'M', 'L'];        
+        $couriers = ['MR', 'LP'];
+
 
         $output = [];
 
@@ -27,28 +32,21 @@ class InputProcessing
                 count($splitUpTransaction) == 3 &&
                 preg_match($isoPattern, $splitUpTransaction[0])
             ) {
-                echo 'Ilgis/data' . $transaction . '<br>';
                 if (
-                    $splitUpTransaction[1] == 'S' ||
-                    $splitUpTransaction[1] == 'M' ||
-                    $splitUpTransaction[1] == 'L'
+                    in_array(trim($splitUpTransaction[1]), $sizes)
                 ) {
-                    echo 'dydis' . $transaction . '<br>';
-                    echo 'Hmmmm ' . $splitUpTransaction[2] . '<br>';
                     if (
-                        $splitUpTransaction[2] == 'MR' ||
-                        $splitUpTransaction[2] == 'LP'
+                        in_array(trim($splitUpTransaction[2]), $couriers)
                     ) {
-                        echo 'kurjeris' . $transaction . '<br>';
                         $output[] = $transaction;
                     } else {
-                        $output[] = $transaction . ' Ignored';
+                        $output[] = $transaction . 'Ignored';
                     }
                 } else {
-                    $output[] = $transaction . ' Ignored';
+                    $output[] = $transaction . 'Ignored';
                 }
             } else {
-                $output[] = $transaction . ' Ignored';
+                $output[] = $transaction . 'Ignored';
             }
         }
 
