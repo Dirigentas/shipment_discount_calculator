@@ -13,7 +13,30 @@ class Calculations
      * @return
      */
     public static function lowestPrice(array $output, array $controlPanel): array
-    { 
+    {         
+        $lowestSprice = INF;
+        $lowestScourier;
+
+        foreach ($controlPanel as $key => $value) {
+            if ($value['S'] < $lowestSprice) {
+                $lowestSprice = $value['S'];
+                $lowestScourier = $key;
+            }
+        }
+        // foreach ($output as $key => &$value) {
+        //     if (
+        //         !str_contains($value, 'Ignored') &&
+        //         explode(' ', $value)[1] === 'S'
+        //     ) {
+        //         $value = $value . $lowestSprice;
+        //     }
+        // }
+        foreach ($output as $key => &$transaction) {
+
+            if (str_contains($transaction, 'Ignored')) {
+                continue;
+            }
+
         // $controlPanel = [
         //     'LP' => [
         //         'S' => 1.5,
@@ -26,24 +49,20 @@ class Calculations
         //         'L' => 4
         //     ]
         // ];
-        
-        $ArrayS = [];
-        $lowestSprice = INF;
-        $lowestScourier;
 
-        foreach ($controlPanel as $key => $value) {
-            if ($value['S'] < $lowestSprice) {
-                $lowestSprice = $value['S'];
-                $lowestScourier = $key;
+            $splitTransaction = explode(' ', $transaction);
+
+            foreach (array_keys($controlPanel) as $courier) {
+                if ($courier === trim($splitTransaction[2])) {
+                    echo $courier . '<br>';
+                    foreach (array_keys($courier) as $size) {
+                        if ($size === $splitTransaction[1]) {
+                            echo $transaction . '<br>';
+                        }
+                    }
+                }
             }
         }
-
-        foreach ($output as $key => &$value) {
-            if (explode(' ', $value)[1] === 'S') {
-                $value = $value . $lowestSprice;
-            }
-        }
-
         return $output;
     }
 }
