@@ -52,12 +52,11 @@ class Calculations
 
             $splitTransaction = explode(' ', $transaction);
 
-            foreach (array_keys($controlPanel) as $courier) {
+            foreach ($controlPanel as $courier => $prices) {
                 if ($courier === trim($splitTransaction[2])) {
-                    echo $courier . '<br>';
-                    foreach (array_keys($courier) as $size) {
+                    foreach ($prices as $size => $price) {
                         if ($size === $splitTransaction[1]) {
-                            echo $transaction . '<br>';
+                            $transaction .= ' ' . number_format($price, 2);
                         }
                     }
                 }

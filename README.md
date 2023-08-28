@@ -6,11 +6,6 @@
 
 ## `Start the solution`
 
-:bowtie: :bowtie: :mouse:
-
--   :atom:
-    :smiley:
-
 -   have PHP installed in your machine
 -   [Click to open](http://localhost/vinted_shipment_discount/public/) to view it in your browser
 
