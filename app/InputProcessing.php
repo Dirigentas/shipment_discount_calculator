@@ -56,7 +56,7 @@ class InputProcessing
                 $output[] = $transaction . 'Ignored';
             }
         }
-        $output = Calculations::lowestPrice($output, $controlPanel);
+        $output = Calculations::sPackageDiscount($output, $controlPanel);
 
         return [$input, $output];
     }
