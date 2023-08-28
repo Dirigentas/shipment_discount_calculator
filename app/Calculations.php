@@ -6,6 +6,14 @@ namespace ShipmentDiscount;
 
 class Calculations
 {
+    private static function numberFormat(float $number)
+    {
+        if ($number == 0) {
+            return '-';
+        } else {
+            return number_format($number, 2);
+        }
+    }
     /**
      * 
      * 
@@ -14,6 +22,8 @@ class Calculations
      */
     public static function lowestPrice(array $output, array $controlPanel): array
     {         
+        
+
         $lowestSprice = INF;
         $lowestScourier;
 
@@ -23,14 +33,7 @@ class Calculations
                 $lowestScourier = $key;
             }
         }
-        // foreach ($output as $key => &$value) {
-        //     if (
-        //         !str_contains($value, 'Ignored') &&
-        //         explode(' ', $value)[1] === 'S'
-        //     ) {
-        //         $value = $value . $lowestSprice;
-        //     }
-        // }
+        
         foreach ($output as $key => &$transaction) {
 
             if (str_contains($transaction, 'Ignored')) {
@@ -56,11 +59,18 @@ class Calculations
                 if ($courier === trim($splitTransaction[2])) {
                     foreach ($prices as $size => $price) {
                         if ($size === $splitTransaction[1]) {
-                            $transaction .= ' ' . number_format($price, 2);
+                            if ($splitTransaction[1] === 'S') {
+                                // echo $price - $lowestSprice . '<br>';
+                                $transaction .= ' ' . self::numberFormat($lowestSprice) . ' ' . self::numberFormat($price - $lowestSprice);
+
+                            } else {
+                                $transaction .= ' ' . self::numberFormat($price) . ' -';
+                                
+                            }
                         }
                     }
                 }
-            }
+            }            
         }
         return $output;
     }

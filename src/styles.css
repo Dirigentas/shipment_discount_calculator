@@ -4,6 +4,7 @@
 .list {
     font-size: 16px;
     margin-top: 8px;
+    font-family: monospace;
 }
 .flex {
     display: flex;
