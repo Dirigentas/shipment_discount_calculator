@@ -12,9 +12,9 @@ use ShipmentDiscount\Controllers\ShipmentDiscountController;
 class App
 {
     /**
-     * Breaks the URL at each slash
+     * Splits the URL at each slash and gives that array to router method.
      * 
-     * @return string redirecting to the static method
+     * @return string Returns router method.
      */
     public static function start(): string
     {
@@ -23,11 +23,11 @@ class App
         return self::router($url);
     }
     
-    /**
-     * According to the split URL parts redirects to the necessary cotrollers methods
-     * 
-     * @param array gets an already split URL
-     * @return string if the conditions are met, it does a redirect, if not we get information about a path not found
+     /**
+     * Routes the request to the appropriate controller based on the URL and request method.
+     *
+     * @param array $url The URL split into an array of segments.
+     * @return string The response from the controller or a 404 error message.
      */
     private static function router(array $url): string
     {
@@ -39,12 +39,12 @@ class App
         return '404 NOT FOUND';
     }
 
-    /**
-     * This function takes all data and transfers it to the necessary 'view' file
-     * 
-     * @param string $_name The name of the View file to be used
-     * @param array $data The data being transferred to 'view' file
-     * @return string if the conditions are met, it does a redirect, if not we get information about a path not found
+     /**
+     * Renders and returns a 'view' file.
+     *
+     * @param string $__name The name of the view file to render.
+     * @param array $data An associative array of data to pass to the 'view'.
+     * @return string The rendered 'view' output.
      */
     public static function view(string $__name, array $data): string
     {

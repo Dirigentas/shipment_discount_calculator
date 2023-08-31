@@ -6,6 +6,13 @@ namespace ShipmentDiscount;
 
 class Calculations
 {
+    /**
+     * Formats a given number.
+     *
+     * @param float $number The number to be formatted.
+     *
+     * @return string Returns '-' if the number is 0, otherwise returns the number formatted with 2 decimal places.
+     */
     private static function numberFormat (float $number)
     {
         if ($number == 0) {
@@ -16,10 +23,12 @@ class Calculations
     }
 
     /**
-     * 
-     * 
-     * @param
-     * @return
+     * Applies a discount to the S package for a given set of transactions.
+     *
+     * @param array $output The array of transactions to be processed.
+     * @param array $controlPanel The array containing the courier and package size information.
+     *
+     * @return array Returns an array of transactions with the S package discount applied.
      */
     public static function sPackageDiscount(array $output, array $controlPanel): array
     {         
@@ -59,7 +68,12 @@ class Calculations
     }
 
     /**
-     * 
+     * Applies a discount to the L package for a given set of transactions.
+     *
+     * @param array $output The array of transactions to be processed.
+     * @param array $controlPanel The array containing the courier and package size information.
+     *
+     * @return array Returns an array of transactions with the L package discount applied.
      */
     private static function lPackageDiscount (array $output, array $controlPanel): array
     {
@@ -94,27 +108,19 @@ class Calculations
                 }
             }
         }    
-        return self::totalDiscouns($output, $controlPanel);
+        return self::limitsDiscounts($output, $controlPanel);
     }
     
     /**
-     * 
+     * Applies limits to discounts for a given set of transactions.
+     *
+     * @param array $output The array of transactions to be processed.
+     * @param array $controlPanel The array containing the courier and package size information.
+     *
+     * @return array Returns an array of transactions with the limited discounts.
      */
-    private static function totalDiscouns(array $output, array $controlPanel): array
+    private static function limitsDiscounts(array $output, array $controlPanel): array
     {
-            // $controlPanel = [
-        //     'LP' => [
-        //         'S' => 1.5,
-        //         'M' => 4.9,
-        //         'L' => 6.9
-        //     ],
-        //     'MR' => [
-        //         'S' => 2,
-        //         'M' => 3,
-        //         'L' => 4
-        //     ]
-        // ];
-
         foreach ($output as $key => &$transaction) {
             
             $splitTransaction = explode(' ', $transaction);
@@ -126,13 +132,16 @@ class Calculations
                 continue;
             }
 
-            // I know that it's a not a good practise to place '@', but I did it to lower the amount of code
+            // it's a not a good practise to place '@', but I did it to lower the amount of code
             @$totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] += $splitTransaction[4];
-            print_r($totalMonthsDiscount);
-            echo '<br>';
 
+            if ($totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] > 10) {
+                
+                $splitTransaction[3] += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - 10;
+                $splitTransaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - 10;
+                $transaction = implode(' ', $splitTransaction);
+            }
         }
-
         return $output;
     }
 }

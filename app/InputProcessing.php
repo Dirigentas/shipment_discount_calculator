@@ -8,11 +8,11 @@ use ShipmentDiscount\Calculations;
 
 class InputProcessing
 {
-    /**
-     * Verifies if transactions data format is correct: date format, size, courier
-     * 
-     * @param array $input Data from 'input.txt' file
-     * @return array[] $arrayOfArrays An array of 'input' and 'output' arrays
+     /**
+     * Verifies the input data and returns an array containing the verified output: date format, size, courier
+     *
+     * @param array $input An array of strings representing transactions. Each transaction format should be in according to $controlPanel structure.
+     * @return array[] An array containing two elements: the original input array and an array of verified transactions. Transactions that do not match the expected format or contain invalid values are appended with "Ignored".
      */
     public static function dataVerification(array $input): array
     { 

@@ -7,6 +7,7 @@
 ## `Start the solution`
 
 -   have PHP installed in your machine
+-   have XAAMP installed in your machine (need to consult what is the alternatives)
 -   [Click to open](http://localhost/vinted_shipment_discount/public/) to view it in your browser
 
 ## 🎯 Project features/goals from task requirements
