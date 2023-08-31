@@ -50,9 +50,6 @@ class App
     {
         // necessary so that the data does not travel immediately, but only when we collect all the necessary information
         ob_start();
-        
-        $input;
-        $output;
 
         require __DIR__ . '/../view/header.php';
 

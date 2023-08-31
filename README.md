@@ -8,7 +8,7 @@
 
 -   have server
 -   have PHP installed in your server / machine
--   Click [localhost/vinted_shipment_discount/public](http://localhost/vinted_shipment_discount/public/) to view the solution in your browser
+-   [http://localhost/vinted_shipment_discount/public/](http://localhost/vinted_shipment_discount/public/) to view the solution in your browser
 
 ## 🎯 Project features/goals from task requirements
 
