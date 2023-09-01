@@ -6,9 +6,11 @@
 
 ## `Start the solution`
 
--   have PHP installed in your server / machine
--   kazkokia alternatyva npm i (padarius keisti)
--   run project, run tests (padarius keisti)
+-   have PHP and composer installed in your system
+-   run below terminal commands:
+    -   composer install
+    -   composer run-script start
+    -   composer run-script tests
 
 ## 🎯 Project features/goals from task requirements
 

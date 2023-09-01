@@ -17,6 +17,7 @@
         }
     ],
     "scripts": {
-        "start": "php -S localhost:8000 -t public/ (čia tik pvz)"
+        "start": "php src\\test.php",
+        "tests": "php src\\test.php"
     }
 }

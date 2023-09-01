@@ -14,13 +14,15 @@ class FileReader
      * @param string $fileName The name of the file to read from. The file should be located in the './../public/' directory.
      * @return array An array containing the verified data from the file. The data is verified using the InputProcessing::dataVerification() method.
      */
-    public static function getFileData(string $fileName): array
+    public static function getFileData(string $fileName)
     {
-        $input = file_get_contents('./../public/' . $fileName);
+        $input = file_get_contents('./public/' . $fileName);
+        // $input = file_get_contents('./../public/' . $fileNamSe);
+    
+        // $input = explode("\n", $input);
 
-        $input = explode("\n", $input);
-
-        return InputProcessing::dataVerification($input);
+        // return InputProcessing::dataVerification($input);
+        return $input;
     }
 }
 
