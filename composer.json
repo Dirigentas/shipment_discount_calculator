@@ -1,5 +1,5 @@
 {
-    "name": "dirigentas/vinted_shipment_discount",
+    "name": "aras/vinted_shipment_discount",
     "require": {
         "phpunit/phpunit": "^10.3"
     },
@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Dirigentas\\VintedShipmentDiscount\\": "src/"
+            "Aras\\VintedShipmentDiscount\\": "src/"
         }
     },
     "authors": [
@@ -17,7 +17,7 @@
         }
     ],
     "scripts": {
-        "start": "php src\\test.php",
-        "tests": "php src\\test.php"
+        "start": "php public\\index.php",
+        "tests": "php tests\\test.php"
     }
 }

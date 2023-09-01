@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dirigentas\VintedShipmentDiscount;
+namespace Aras\VintedShipmentDiscount;
 
 class Calculations
 {
@@ -139,6 +139,8 @@ class Calculations
                 
                 $splitTransaction[3] += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - 10;
                 $splitTransaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - 10;
+                $splitTransaction[3] = number_format($splitTransaction[3], 2);
+                $splitTransaction[4] = self::numberFormat($splitTransaction[4]);
                 $transaction = implode(' ', $splitTransaction);
             }
         }

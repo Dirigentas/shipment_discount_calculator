@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Dirigentas\VintedShipmentDiscount;
+namespace Aras\VintedShipmentDiscount;
 
-use Dirigentas\VintedShipmentDiscount\Calculations;
+use Aras\VintedShipmentDiscount\Calculations;
 
-class InputProcessing
+class DataValidation
 {
      /**
-     * Verifies the input data and returns an array containing the verified output: date format, size, courier
+     * Verifies the input data (date format, package size, courier) and returns an array containing the verified output.
      *
      * @param array $input An array of strings representing transactions. Each transaction format should be in according to $controlPanel structure.
-     * @return array[] An array containing two elements: the original input array and an array of verified transactions. Transactions that do not match the expected format or contain invalid values are appended with "Ignored".
+     * @return array An array of verified transactions. Transactions that do not match the expected format or contain invalid values are appended with "Ignored".
      */
     public static function dataVerification(array $input): array
     { 
