@@ -47,12 +47,12 @@ class InputProcessing
             ) {
                 $output[] = $transaction;
             } else {
-                $output[] = $transaction . 'Ignored';
+                $output[] = $transaction . ' Ignored';
             }
         }
         $output = Calculations::sPackageDiscount($output, $controlPanel);
 
-        return [$input, $output];
+        return $output;
     }
 }
 

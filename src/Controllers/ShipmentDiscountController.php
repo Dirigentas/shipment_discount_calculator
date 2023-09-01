@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dirigentas\VintedShipmentDiscount\Controllers;
 
 use Dirigentas\VintedShipmentDiscount\FileReader;
-use Dirigentas\VintedShipmentDiscount\App;
+// use Dirigentas\VintedShipmentDiscount\App;
 
 class ShipmentDiscountController
 {
@@ -19,20 +19,13 @@ class ShipmentDiscountController
         
         $data = FileReader::getFileData('input.txt');
 
-        // $input = implode(' ', $data[0]);
-
-        // echo $input;
-
-        // $output = implode(' ', $data[1]);
-        
+        $data = implode("\r\n", $data);
     
         $stdout = fopen('php://stdout', 'w');
-        // fwrite($stdout, "Hello world\n");
-        fwrite($stdout, $data);
-        // fwrite($stdout, $output);
-        fclose($stdout);
 
-        // return $data;
+        fwrite($stdout, $data);
+        
+        fclose($stdout);
     }
 }
 

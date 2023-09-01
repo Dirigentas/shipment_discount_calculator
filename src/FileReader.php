@@ -17,12 +17,10 @@ class FileReader
     public static function getFileData(string $fileName)
     {
         $input = file_get_contents('./public/' . $fileName);
-        // $input = file_get_contents('./../public/' . $fileNamSe);
     
-        // $input = explode("\n", $input);
+        $input = explode("\r\n", $input);
 
-        // return InputProcessing::dataVerification($input);
-        return $input;
+        return InputProcessing::dataVerification($input);
     }
 }
 
