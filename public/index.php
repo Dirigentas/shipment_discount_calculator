@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-// hand made autoloader
-require __DIR__ . '/../autoloader/autoloader.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-use ShipmentDiscount\App; 
+use Dirigentas\VintedShipmentDiscount\App; 
 
-// Starts the webpage
+// Starting point
 echo App::start();
 
 ?>

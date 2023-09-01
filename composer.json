@@ -1,0 +1,22 @@
+{
+    "name": "dirigentas/vinted_shipment_discount",
+    "require": {
+        "phpunit/phpunit": "^10.3"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dirigentas\\VintedShipmentDiscount\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aras"
+        }
+    ],
+    "scripts": {
+        "start": "php -S localhost:8000 -t public/ (čia tik pvz)"
+    }
+}

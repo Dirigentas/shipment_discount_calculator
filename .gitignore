@@ -2,3 +2,4 @@
 /.vscode
 .env
 to_do.md
+/vendor/
