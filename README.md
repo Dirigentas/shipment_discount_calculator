@@ -6,9 +6,9 @@
 
 ## `Start the solution`
 
--   have server
 -   have PHP installed in your server / machine
--   [http://localhost/vinted_shipment_discount/public/](http://localhost/vinted_shipment_discount/public/) to view the solution in your browser
+-   kazkokia alternatyva npm i (padarius keisti)
+-   run project, run tests (padarius keisti)
 
 ## 🎯 Project features/goals from task requirements
 
@@ -26,7 +26,6 @@
     ### Features added by the author
 
     -   OOP
-    -   MVC
 
 ## 😃 Author
 

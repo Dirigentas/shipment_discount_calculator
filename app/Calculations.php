@@ -112,7 +112,7 @@ class Calculations
     }
     
     /**
-     * Applies limits to discounts for a given set of transactions.
+     * Applies monthly limits to discounts for a given set of transactions.
      *
      * @param array $output The array of transactions to be processed.
      * @param array $controlPanel The array containing the courier and package size information.

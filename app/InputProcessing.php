@@ -41,17 +41,11 @@ class InputProcessing
 
             if (
                 count($splitUpTransaction) == 3 &&
-                preg_match($isoPattern, $splitUpTransaction[0])
+                preg_match($isoPattern, $splitUpTransaction[0]) &&
+                in_array($splitUpTransaction[1], array_keys($controlPanel[array_key_first($controlPanel)])) &&
+                in_array(trim($splitUpTransaction[2]), array_keys($controlPanel))
             ) {
-                if (in_array($splitUpTransaction[1], array_keys($controlPanel[array_key_first($controlPanel)]))) {
-                    if (in_array(trim($splitUpTransaction[2]), array_keys($controlPanel))) {
-                        $output[] = $transaction;
-                    } else {
-                        $output[] = $transaction . 'Ignored';
-                    }
-                } else {
-                    $output[] = $transaction . 'Ignored';
-                }
+                $output[] = $transaction;
             } else {
                 $output[] = $transaction . 'Ignored';
             }
