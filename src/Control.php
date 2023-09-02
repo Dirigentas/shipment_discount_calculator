@@ -37,9 +37,9 @@ final class Control
         
         $output = DataValidation::dataVerification($input, $this->controlPanel);
         
-        $output = Calculations::sPackageDiscount($output, $this->controlPanel);
+        $output = Calculations::matchLowestProviderPrice($output, $this->controlPanel);
         
-        $output = Calculations::lPackageDiscount($output, $this->controlPanel);
+        $output = Calculations::freeOncePerMonth($output, $this->controlPanel);
         
         $output = Calculations::limitsDiscounts($output);
         

@@ -23,11 +23,11 @@ final class CalculationsTest extends TestCase
     }
 
     /**
-     * Test the sPackageDiscount method of the Calculations class
+     * Test the matchLowestProviderPrice method of the Calculations class
      */
-    public function testSPackageDiscount(): void
+    public function testMatchLowestProviderPrice(): void
     {
-        $result = Calculations::sPackageDiscount([
+        $result = Calculations::matchLowestProviderPrice([
             '2015-02-01 S MR',
             '2015-02-02 S MR',
             '2015-02-03 L LP',
@@ -87,11 +87,11 @@ final class CalculationsTest extends TestCase
     }
 
     /**
-     * Test the lPackageDiscount method of the Calculations class
+     * Test the freeOncePerMonth method of the Calculations class
      */
-    public function testLPackageDiscount(): void
+    public function testFreeOncePerMonth(): void
     {
-        $result = Calculations::lPackageDiscount([
+        $result = Calculations::freeOncePerMonth([
             '2015-02-01 S MR 1.50 0.50',
             '2015-02-02 S MR 1.50 0.50',
             '2015-02-03 L LP 6.90 -',
