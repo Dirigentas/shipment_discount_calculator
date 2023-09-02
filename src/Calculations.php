@@ -13,7 +13,7 @@ class Calculations
      *
      * @return string|float Returns '-' if the number is 0, otherwise with 2 decimal places.
      */
-    private static function _numberFormat(float $number): string|float
+    public static function numberFormat(float $number): string|float
     {
         if ($number == 0) {
             return '-';
@@ -55,9 +55,9 @@ class Calculations
                     foreach ($prices as $size => $price) {
                         if ($size === $splitTransaction[1]) {
                             if ($splitTransaction[1] === 'S') {
-                                $transaction .= ' ' . self::_numberFormat($lowestSprice) . ' ' . self::_numberFormat($price - $lowestSprice);
+                                $transaction .= ' ' . self::numberFormat($lowestSprice) . ' ' . self::numberFormat($price - $lowestSprice);
                             } else {
-                                $transaction .= ' ' . self::_numberFormat($price) . ' -';
+                                $transaction .= ' ' . self::numberFormat($price) . ' -';
                             }
                         }
                     }
@@ -137,7 +137,7 @@ class Calculations
                 $splitTransaction[3] += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - 10;
                 $splitTransaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - 10;
                 $splitTransaction[3] = number_format($splitTransaction[3], 2);
-                $splitTransaction[4] = self::_numberFormat($splitTransaction[4]);
+                $splitTransaction[4] = self::numberFormat($splitTransaction[4]);
                 $transaction = implode(' ', $splitTransaction);
             }
         }
