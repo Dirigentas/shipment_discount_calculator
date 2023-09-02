@@ -14,28 +14,11 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Aras\VintedShipmentDiscount\FileReader;
-use Aras\VintedShipmentDiscount\DataValidation;
-use Aras\VintedShipmentDiscount\Calculations;
+use Aras\VintedShipmentDiscount\Control;
 
 /**
- * Start the Shipment Discount Calculations.
+ * Starts the solution.
  */
-
-$input = FileReader::getFileData('input.txt');
-
-$output = DataValidation::dataVerification($input);
-        
-$output = Calculations::sPackageDiscount($output[0], $output[1]);
-
-$output = Calculations::lPackageDiscount($output[0], $output[1]);
-
-$output = Calculations::limitsDiscounts($output);
-
-$output = implode("\r\n", $output);
-
-$stdout = fopen('php://stdout', 'w');
-fwrite($stdout, $output);
-fclose($stdout);
+(new Control)->executeAndWriteToStdout();
 
 ?>

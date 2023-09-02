@@ -13,24 +13,10 @@ class DataValidation
       *
       * @return array An array of checked and ignored transactions.
       */
-    public static function dataVerification(array $input): array
+    public static function dataVerification(array $input, array $controlPanel): array
     { 
         // Regular expression to match valid ISO 8601 date format (YYYY-MM-DD)
         $isoPattern = "/^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/";
-
-        // Control panel: all possible sizes, couriers and prices.
-        $controlPanel = [
-            'LP' => [
-                'S' => 1.5,
-                'M' => 4.9,
-                'L' => 6.9
-            ],
-            'MR' => [
-                'S' => 2,
-                'M' => 3,
-                'L' => 4
-            ]
-        ];
 
         $output = [];
 
@@ -49,7 +35,7 @@ class DataValidation
             }
         }
 
-        return [$output, $controlPanel];
+        return $output;
     }
 }
 

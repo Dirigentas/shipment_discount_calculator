@@ -64,7 +64,7 @@ class Calculations
                 }
             }            
         }
-        return [$output, $controlPanel];
+        return $output;
     }
 
     /**
