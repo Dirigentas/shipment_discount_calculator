@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Aras\VintedShipmentDiscount;
 
-use Aras\VintedShipmentDiscount\Calculations;
-
 class DataValidation
 {
      /**
@@ -50,9 +48,8 @@ class DataValidation
                 $output[] = $transaction . ' Ignored';
             }
         }
-        $output = Calculations::sPackageDiscount($output, $controlPanel);
 
-        return $output;
+        return [$output, $controlPanel];
     }
 }
 

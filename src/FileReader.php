@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Aras\VintedShipmentDiscount;
 
-use Aras\VintedShipmentDiscount\DataValidation;
-
 class FileReader
 {
     /**
@@ -13,19 +11,13 @@ class FileReader
      *
      * @param string $fileName The name of the file to read data from.
      *
-     * @return void
+     * @return array Array of transactions from input.txt.
      */
-    public static function getFileData(string $fileName): void
+    public static function getFileData(string $fileName): array
     {    
         $input = explode("\r\n", file_get_contents('./public/' . $fileName));
 
-        $output = implode("\r\n", DataValidation::dataVerification($input));
-    
-        $stdout = fopen('php://stdout', 'w');
-
-        fwrite($stdout, $output);
-
-        fclose($stdout);
+        return $input;
     }
 }
 

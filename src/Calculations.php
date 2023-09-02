@@ -55,16 +55,16 @@ class Calculations
                     foreach ($prices as $size => $price) {
                         if ($size === $splitTransaction[1]) {
                             if ($splitTransaction[1] === 'S') {
-                                $transaction .= ' ' . self::numberFormat($lowestSprice) . ' ' . self::numberFormat($price - $lowestSprice);
+                                $transaction .= ' ' . self::_numberFormat($lowestSprice) . ' ' . self::_numberFormat($price - $lowestSprice);
                             } else {
-                                $transaction .= ' ' . self::numberFormat($price) . ' -';
+                                $transaction .= ' ' . self::_numberFormat($price) . ' -';
                             }
                         }
                     }
                 }
             }            
         }
-        return self::lPackageDiscount($output, $controlPanel);
+        return [$output, $controlPanel];
     }
 
     /**
@@ -75,7 +75,7 @@ class Calculations
      *
      * @return array Array of transactions with the L package discount applied.
      */
-    private static function _lPackageDiscount(array $output, array $controlPanel): array
+    public static function lPackageDiscount(array $output, array $controlPanel): array
     {
         $everyThirdCounter = 0;
         $oneFreeCounter = [];
@@ -107,18 +107,17 @@ class Calculations
                 }
             }
         }    
-        return self::limitsDiscounts($output, $controlPanel);
+        return $output;
     }
     
     /**
      * Applies monthly limits to discounts for a given set of transactions.
      *
      * @param array $output       The array of transactions to be processed.
-     * @param array $controlPanel Contains the courier and package size information.
      *
      * @return array Returns an array of transactions with the limited discounts.
      */
-    private static function _limitsDiscounts(array $output, array $controlPanel): array
+    public static function limitsDiscounts(array $output): array
     {
         foreach ($output as $key => &$transaction) {
             
@@ -138,7 +137,7 @@ class Calculations
                 $splitTransaction[3] += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - 10;
                 $splitTransaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - 10;
                 $splitTransaction[3] = number_format($splitTransaction[3], 2);
-                $splitTransaction[4] = self::numberFormat($splitTransaction[4]);
+                $splitTransaction[4] = self::_numberFormat($splitTransaction[4]);
                 $transaction = implode(' ', $splitTransaction);
             }
         }

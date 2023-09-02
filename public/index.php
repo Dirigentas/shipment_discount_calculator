@@ -15,10 +15,27 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 use Aras\VintedShipmentDiscount\FileReader;
+use Aras\VintedShipmentDiscount\DataValidation;
+use Aras\VintedShipmentDiscount\Calculations;
 
 /**
  * Start the Shipment Discount Calculations.
  */
-FileReader::getFileData('input.txt');
+
+$input = FileReader::getFileData('input.txt');
+
+$output = DataValidation::dataVerification($input);
+        
+$output = Calculations::sPackageDiscount($output[0], $output[1]);
+
+$output = Calculations::lPackageDiscount($output[0], $output[1]);
+
+$output = Calculations::limitsDiscounts($output);
+
+$output = implode("\r\n", $output);
+
+$stdout = fopen('php://stdout', 'w');
+fwrite($stdout, $output);
+fclose($stdout);
 
 ?>
