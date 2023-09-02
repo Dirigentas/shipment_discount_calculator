@@ -5,8 +5,14 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Aras\VintedShipmentDiscount\DataValidation;
 
+/**
+ * Test case for the DataValidation class
+ */
 final class DataValidationTest extends TestCase
 {
+    /**
+     * Test the dataVerification method of the DataValidation class
+     */
     public function testDataVerification(): void
     {
         $result = DataValidation::dataVerification([

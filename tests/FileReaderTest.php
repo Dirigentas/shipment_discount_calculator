@@ -5,8 +5,14 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Aras\VintedShipmentDiscount\FileReader;
 
+/**
+ * Test case for the FileReader class
+ */
 final class FileReaderTest extends TestCase
 {
+    /**
+     * Test the getFileData method of the FileReader class
+     */
     public function testGetFileData(): void
     {
         $result = FileReader::getFileData('input.txt');

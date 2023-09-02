@@ -5,8 +5,14 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Aras\VintedShipmentDiscount\Calculations;
 
+/**
+ * Test case for the Calculations class
+ */
 final class CalculationsTest extends TestCase
 {
+    /**
+     * Test the numberFormat method of the Calculations class
+     */
     public function testNumberFormat(): void
     {
         $result = Calculations::numberFormat(0);
@@ -16,6 +22,9 @@ final class CalculationsTest extends TestCase
         $this->assertEquals(1.00, $result);
     }
 
+    /**
+     * Test the sPackageDiscount method of the Calculations class
+     */
     public function testSPackageDiscount(): void
     {
         $result = Calculations::sPackageDiscount([
@@ -77,6 +86,9 @@ final class CalculationsTest extends TestCase
         ], $result);
     }
 
+    /**
+     * Test the lPackageDiscount method of the Calculations class
+     */
     public function testLPackageDiscount(): void
     {
         $result = Calculations::lPackageDiscount([
@@ -138,6 +150,9 @@ final class CalculationsTest extends TestCase
         ], $result);
     }
 
+    /**
+     * Test the limitsDiscounts method of the Calculations class
+     */
     public function testLimitsDiscounts(): void
     {
         $result = Calculations::limitsDiscounts([

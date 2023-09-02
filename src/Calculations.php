@@ -23,7 +23,7 @@ class Calculations
     }
 
     /**
-     * Applies a discount to the S package for a given set of transactions.
+     * Adds all prices and applies a discount to the S package for a given set of transactions.
      *
      * @param array $output       The array of transactions to be processed.
      * @param array $controlPanel Contains the courier and package size information.
@@ -32,16 +32,15 @@ class Calculations
      */
     public static function sPackageDiscount(array $output, array $controlPanel): array
     {         
+        // Finds the lowest S size package price
         $lowestSprice = INF;
-        $lowestScourier = '';
-
-        foreach ($controlPanel as $key => $value) {
-            if ($value['S'] < $lowestSprice) {
-                $lowestSprice = $value['S'];
-                $lowestScourier = $key;
+        foreach ($controlPanel as $courier => $price) {
+            if ($price['S'] < $lowestSprice) {
+                $lowestSprice = $price['S'];
             }
         }
         
+        // Adds all prices and S size package discounts
         foreach ($output as $key => &$transaction) {
 
             if (str_contains($transaction, 'Ignored')) {
@@ -50,9 +49,9 @@ class Calculations
 
             $splitTransaction = explode(' ', $transaction);
 
-            foreach ($controlPanel as $courier => $prices) {
+            foreach ($controlPanel as $courier => $price) {
                 if ($courier === trim($splitTransaction[2])) {
-                    foreach ($prices as $size => $price) {
+                    foreach ($price as $size => $price) {
                         if ($size === $splitTransaction[1]) {
                             if ($splitTransaction[1] === 'S') {
                                 $transaction .= ' ' . self::numberFormat($lowestSprice) . ' ' . self::numberFormat($price - $lowestSprice);
@@ -77,10 +76,12 @@ class Calculations
      */
     public static function lPackageDiscount(array $output, array $controlPanel): array
     {
+        $freeTransactionNo = 3;
+
         $everyThirdCounter = 0;
         $oneFreeCounter = [];
 
-        foreach ($output as $key => &$transaction) {
+        foreach ($output as &$transaction) {
 
             if (str_contains($transaction, 'Ignored')) {
                 continue;
