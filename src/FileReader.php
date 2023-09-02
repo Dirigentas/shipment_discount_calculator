@@ -9,7 +9,7 @@ use Aras\VintedShipmentDiscount\DataValidation;
 class FileReader
 {
     /**
-     * Reads data from a file, processes it using DataValidation::dataVerification and puts output to STDOUT.
+     * Reads data from a file, processes it and puts output to STDOUT.
      *
      * @param string $fileName The name of the file to read data from.
      *

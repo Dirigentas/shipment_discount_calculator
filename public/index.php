@@ -5,8 +5,8 @@
  *
  * PHP version 8.2
  *
- * @author   Aras
- * @license  http://opensource.org/licenses/MIT MIT License
+ * @author  Aras
+ * @license http://opensource.org/licenses/MIT MIT License
  * @link     private repository
  */
 

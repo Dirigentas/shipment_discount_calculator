@@ -11,9 +11,9 @@ class Calculations
      *
      * @param float $number The number to be formatted.
      *
-     * @return string|float Returns '-' if the number is 0, otherwise returns the number formatted with 2 decimal places.
+     * @return string|float Returns '-' if the number is 0, otherwise with 2 decimal places.
      */
-    private static function numberFormat (float $number): string|float
+    private static function _numberFormat(float $number): string|float
     {
         if ($number == 0) {
             return '-';
@@ -25,10 +25,10 @@ class Calculations
     /**
      * Applies a discount to the S package for a given set of transactions.
      *
-     * @param array $output The array of transactions to be processed.
-     * @param array $controlPanel The array containing the courier and package size information.
+     * @param array $output       The array of transactions to be processed.
+     * @param array $controlPanel Contains the courier and package size information.
      *
-     * @return array Returns an array of transactions with the S package discount applied.
+     * @return array Array of transactions with the S package discount applied.
      */
     public static function sPackageDiscount(array $output, array $controlPanel): array
     {         
@@ -70,12 +70,12 @@ class Calculations
     /**
      * Applies a discount to the L package for a given set of transactions.
      *
-     * @param array $output The array of transactions to be processed.
-     * @param array $controlPanel The array containing the courier and package size information.
+     * @param array $output       The array of transactions to be processed.
+     * @param array $controlPanel Contains the courier and package size information.
      *
-     * @return array Returns an array of transactions with the L package discount applied.
+     * @return array Array of transactions with the L package discount applied.
      */
-    private static function lPackageDiscount (array $output, array $controlPanel): array
+    private static function _lPackageDiscount(array $output, array $controlPanel): array
     {
         $everyThirdCounter = 0;
         $oneFreeCounter = [];
@@ -88,9 +88,8 @@ class Calculations
 
             $splitTransaction = explode(' ', $transaction);
             
-            if (
-                trim($splitTransaction[2]) === 'LP' &&
-                trim($splitTransaction[1]) === 'L'
+            if (trim($splitTransaction[2]) === 'LP' 
+                && trim($splitTransaction[1]) === 'L'
             ) {
                 $everyThirdCounter += 1;
 
@@ -114,25 +113,24 @@ class Calculations
     /**
      * Applies monthly limits to discounts for a given set of transactions.
      *
-     * @param array $output The array of transactions to be processed.
-     * @param array $controlPanel The array containing the courier and package size information.
+     * @param array $output       The array of transactions to be processed.
+     * @param array $controlPanel Contains the courier and package size information.
      *
      * @return array Returns an array of transactions with the limited discounts.
      */
-    private static function limitsDiscounts(array $output, array $controlPanel): array
+    private static function _limitsDiscounts(array $output, array $controlPanel): array
     {
         foreach ($output as $key => &$transaction) {
             
             $splitTransaction = explode(' ', $transaction);
 
-            if (
-                str_contains($transaction, 'Ignored') ||
-                $splitTransaction[4] === '-'
+            if (str_contains($transaction, 'Ignored') 
+                || $splitTransaction[4] === '-'
             ) {
                 continue;
             }
 
-            // it's a not a good practise to place '@', but I did it to lower the amount of code
+            // not a good practise to place '@', but I did it to lower the amount of code
             @$totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] += $splitTransaction[4];
 
             if ($totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] > 10) {
