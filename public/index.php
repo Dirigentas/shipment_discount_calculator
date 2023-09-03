@@ -7,7 +7,7 @@
  *
  * @author  Aras
  * @license http://opensource.org/licenses/MIT MIT License
- * @link     private repository
+ * @link    private repository
  */
 
 declare(strict_types=1);

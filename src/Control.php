@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * File purpose is to make adjustments to couriers and call all required methods.
+ */
+
 declare(strict_types=1);
 
 namespace Aras\VintedShipmentDiscount;
@@ -8,11 +12,14 @@ use Aras\VintedShipmentDiscount\FileReader;
 use Aras\VintedShipmentDiscount\DataValidation;
 use Aras\VintedShipmentDiscount\Calculations;
 
+/**
+ * Class Control controls all pats of the solution.
+ */
 final class Control
 {
      /**
-     * @var array $controlPanel An associative array containing the control panel settings for couriers and their corresponding package sizes and prices.
-     */
+      * @var array $controlPanel An associative array containing the settings for couriers and their corresponding package sizes and prices.
+      */
     private $controlPanel = [
         'LP' => [
             'S' => 1.5,
@@ -27,7 +34,7 @@ final class Control
     ];
 
     /**
-     * This method reads data from an input file, performs data verification and calculations, and writes the output to stdout.
+     * This method reads data from an input file, performs data verification and calculations, writes the output to stdout.
      *
      * @return void
      */

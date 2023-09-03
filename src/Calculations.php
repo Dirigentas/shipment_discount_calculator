@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * File purpose is to calculate discounts on shipments.
+ */
+
 declare(strict_types=1);
 
 namespace Aras\VintedShipmentDiscount;
 
+/**
+ * Class Calculations contains methods for calculating discounts on shipments.
+ */
 class Calculations
 {
     /**
@@ -43,7 +50,7 @@ class Calculations
             }
         }
         
-        // Adds all prices and S size package discounts
+        // Adds all prices and chosen size package discounts
         foreach ($output as $key => &$transaction) {
 
             if (str_contains($transaction, 'Ignored')) {
@@ -52,19 +59,21 @@ class Calculations
 
             $splitTransaction = explode(' ', $transaction);
 
-            foreach ($controlPanel as $courier => $price) {
+            foreach ($controlPanel as $courier => $prices) {
                 if ($courier === trim($splitTransaction[2])) {
-                    foreach ($price as $size => $price) {
+                    foreach ($prices as $size => $price) {
                         if ($size === $splitTransaction[1]) {
                             if ($splitTransaction[1] === $packageSizeForRule) {
-                                $transaction .= ' ' . self::numberFormat($lowestPrice) . ' ' . self::numberFormat($price - $lowestPrice);
+                                $transaction .= ' ' . self::numberFormat($lowestPrice)
+                                . ' '
+                                . self::numberFormat($price - $lowestPrice);
                             } else {
                                 $transaction .= ' ' . self::numberFormat($price) . ' -';
                             }
                         }
                     }
                 }
-            }            
+            }
         }
         return $output;
     }
@@ -123,7 +132,7 @@ class Calculations
     /**
      * Applies monthly limits to discounts for a given set of transactions.
      *
-     * @param array $output       The array of transactions to be processed.
+     * @param array $output The array of transactions to be processed.
      *
      * @return array Returns an array of transactions with the limited discounts.
      */
@@ -147,10 +156,18 @@ class Calculations
 
             if ($totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] > $monthlyDiscountLimit) {
                 
-                $splitTransaction[3] += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - $monthlyDiscountLimit;
-                $splitTransaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] - $monthlyDiscountLimit;
+                $splitTransaction[3]
+                += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))]
+                - $monthlyDiscountLimit;
+
+                $splitTransaction[4]
+                -= $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))]
+                - $monthlyDiscountLimit;
+
                 $splitTransaction[3] = number_format($splitTransaction[3], 2);
+
                 $splitTransaction[4] = self::numberFormat($splitTransaction[4]);
+
                 $transaction = implode(' ', $splitTransaction);
             }
         }

@@ -1,13 +1,19 @@
 <?php
 
+/**
+ * File purpose is to read file data.
+ */
 declare(strict_types=1);
 
 namespace Aras\VintedShipmentDiscount;
 
+/**
+ * Class FileReader reads data from the file.
+ */
 class FileReader
 {
     /**
-     * Reads data from a file, processes it and puts output to STDOUT.
+     * Reads data from a file and processes it.
      *
      * @param string $fileName The name of the file to read data from.
      *

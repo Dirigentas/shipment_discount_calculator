@@ -1,15 +1,23 @@
 <?php
 
+/**
+ * File purpose is to make data validation.
+ */
+
 declare(strict_types=1);
 
 namespace Aras\VintedShipmentDiscount;
 
+/**
+ * Class DataValidation mekes all required data validations.
+ */
 class DataValidation
 {
      /**
       * Verifies the input data and returns an array of verified output.
       *
-      * @param array $input An array of transactions.
+      * @param array $input        An array of transactions.
+      * @param array $controlPanel An array containing the settings for couriers,package sizes, prices.
       *
       * @return array An array of checked and ignored transactions.
       */

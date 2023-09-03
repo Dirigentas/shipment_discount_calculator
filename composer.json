@@ -18,5 +18,13 @@
     "scripts": {
         "start": "php public/index.php",
         "tests": "./vendor/bin/phpunit tests"
+    },
+    "config": {
+        "process-timeout": 300,
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {},
+        "use-include-path": false
     }
 }
