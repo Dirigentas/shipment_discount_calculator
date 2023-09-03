@@ -105,7 +105,8 @@ class Calculations
 
             $splitTransaction = explode(' ', $transaction);
             
-            if (trim($splitTransaction[2]) === $providerForRule 
+            if (
+                trim($splitTransaction[2]) === $providerForRule 
                 && trim($splitTransaction[1]) === $packageSizeForRule
             ) {
                 if (!in_array(date('Y n', strtotime($splitTransaction[0])), $oneFreeCounter)) {
@@ -145,7 +146,8 @@ class Calculations
             
             $splitTransaction = explode(' ', $transaction);
 
-            if (str_contains($transaction, 'Ignored') 
+            if (
+                str_contains($transaction, 'Ignored') 
                 || $splitTransaction[4] === '-'
             ) {
                 continue;
