@@ -16,7 +16,7 @@
         }
     ],
     "scripts": {
-        "start": "php public\\index.php",
-        "tests": "php tests\\test.php"
+        "start": "php public/index.php",
+        "tests": "./vendor/bin/phpunit tests"
     }
 }
