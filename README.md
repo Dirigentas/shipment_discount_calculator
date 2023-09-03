@@ -10,14 +10,14 @@
 -   run below terminal commands:
     -   composer install
     -   composer run-script start
-    -   composer run-script tests
+    -   composer run-script test
 
 ## 🎯 Project features/goals from task requirements
 
--   clean and simple code
+-   PHP language
 -   covered with unit tests
--   PHP
--   language code style, [PSR](https://www.php-fig.org/psr/)
+-   clean and simple code
+-   language code style, [PSR-12](https://www.php-fig.org/psr/psr-12/)
 -   no libraries (except for testing)
 -   an easy way to start the solution
 -   short documentation in the code itself
