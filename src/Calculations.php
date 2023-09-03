@@ -49,10 +49,9 @@ class Calculations
                 $lowestPrice = $price[$packageSizeForRule];
             }
         }
-        
+
         // Adds all prices and chosen size package discounts
         foreach ($output as $key => &$transaction) {
-
             if (str_contains($transaction, 'Ignored')) {
                 continue;
             }
@@ -98,27 +97,24 @@ class Calculations
         $oneFreeCounter = [];
 
         foreach ($output as &$transaction) {
-
             if (str_contains($transaction, 'Ignored')) {
                 continue;
             }
 
             $splitTransaction = explode(' ', $transaction);
-            
+
             if (
-                trim($splitTransaction[2]) === $providerForRule 
+                trim($splitTransaction[2]) === $providerForRule
                 && trim($splitTransaction[1]) === $packageSizeForRule
             ) {
                 if (!in_array(date('Y n', strtotime($splitTransaction[0])), $oneFreeCounter)) {
-    
                     $oneFreeCounter[] = date('Y n', strtotime($splitTransaction[0]));
                     $freeTransactionNoCounter = 0;
                 }
 
-                $freeTransactionNoCounter += 1; 
+                $freeTransactionNoCounter += 1;
 
                 if ($freeTransactionNoCounter === $freeTransactionNo) {
-
                     $splitTransaction[3] = number_format(0, 2);
 
                     $splitTransaction[4] = number_format($controlPanel[$providerForRule][$packageSizeForRule], 2);
@@ -126,10 +122,10 @@ class Calculations
                     $transaction = implode(' ', $splitTransaction);
                 }
             }
-        }    
+        }
         return $output;
     }
-    
+
     /**
      * Applies monthly limits to discounts for a given set of transactions.
      *
@@ -143,11 +139,10 @@ class Calculations
         $monthlyDiscountLimit = 10;
 
         foreach ($output as $key => &$transaction) {
-            
             $splitTransaction = explode(' ', $transaction);
 
             if (
-                str_contains($transaction, 'Ignored') 
+                str_contains($transaction, 'Ignored')
                 || $splitTransaction[4] === '-'
             ) {
                 continue;
@@ -157,7 +152,6 @@ class Calculations
             @$totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] += $splitTransaction[4];
 
             if ($totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] > $monthlyDiscountLimit) {
-                
                 $splitTransaction[3]
                 += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))]
                 - $monthlyDiscountLimit;
@@ -176,5 +170,3 @@ class Calculations
         return $output;
     }
 }
-
-?>

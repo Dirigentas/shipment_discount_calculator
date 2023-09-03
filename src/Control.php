@@ -18,7 +18,7 @@ use Aras\VintedShipmentDiscount\Calculations;
 final class Control
 {
      /**
-      * @var array $controlPanel An associative array containing the settings for couriers and their corresponding package sizes and prices.
+      * @var array $controlPanel An associative array containing the settings for couriers.
       */
     private $controlPanel = [
         'LP' => [
@@ -41,21 +41,19 @@ final class Control
     public function executeAndWriteToStdout(): void
     {
         $input = FileReader::getFileData('input.txt');
-        
+
         $output = DataValidation::dataVerification($input, $this->controlPanel);
-        
+
         $output = Calculations::matchLowestProviderPrice($output, $this->controlPanel);
-        
+
         $output = Calculations::freeOncePerMonth($output, $this->controlPanel);
-        
+
         $output = Calculations::limitsDiscounts($output);
-        
+
         $output = implode("\r\n", $output);
-        
+
         $stdout = fopen('php://stdout', 'w');
         fwrite($stdout, $output);
         fclose($stdout);
     }
 }
-
-?>

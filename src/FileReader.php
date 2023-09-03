@@ -3,6 +3,7 @@
 /**
  * File purpose is to read file data.
  */
+
 declare(strict_types=1);
 
 namespace Aras\VintedShipmentDiscount;
@@ -20,11 +21,9 @@ class FileReader
      * @return array Array of transactions from input.txt.
      */
     public static function getFileData(string $fileName): array
-    {    
+    {
         $input = explode("\r\n", file_get_contents('./public/' . $fileName));
 
         return $input;
     }
 }
-
-?>

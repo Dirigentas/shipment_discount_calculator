@@ -22,19 +22,18 @@ class DataValidation
       * @return array An array of checked and ignored transactions.
       */
     public static function dataVerification(array $input, array $controlPanel): array
-    { 
+    {
         // Regular expression to match valid ISO 8601 date format (YYYY-MM-DD)
         $isoPattern = "/^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/";
 
         $output = [];
 
         foreach ($input as $transaction) {
-
             $splitUpTransaction = explode(' ', $transaction);
 
             if (
-                count($splitUpTransaction) == 3 
-                && preg_match($isoPattern, $splitUpTransaction[0]) 
+                count($splitUpTransaction) == 3
+                && preg_match($isoPattern, $splitUpTransaction[0])
                 && in_array($splitUpTransaction[1], array_keys($controlPanel[array_key_first($controlPanel)]))
                 && in_array(trim($splitUpTransaction[2]), array_keys($controlPanel))
             ) {
@@ -47,5 +46,3 @@ class DataValidation
         return $output;
     }
 }
-
-?>
