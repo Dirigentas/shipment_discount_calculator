@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+namespace Aras\ShipmentDiscountTests;
+
 use PHPUnit\Framework\TestCase;
-use Aras\VintedShipmentDiscount\Calculations;
+use Aras\ShipmentDiscount\Calculations;
 
 /**
  * Test case for the Calculations class
@@ -203,5 +205,3 @@ final class CalculationsTest extends TestCase
         ], $result);
     }
 }
-
-?>

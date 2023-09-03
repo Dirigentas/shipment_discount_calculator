@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+namespace Aras\ShipmentDiscountTests;
+
 use PHPUnit\Framework\TestCase;
-use Aras\VintedShipmentDiscount\FileReader;
+use Aras\ShipmentDiscount\FileReader;
 
 /**
  * Test case for the FileReader class
@@ -41,5 +43,3 @@ final class FileReaderTest extends TestCase
         ], $result);
     }
 }
-
-?>

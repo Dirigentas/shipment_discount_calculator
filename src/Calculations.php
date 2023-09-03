@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Aras\VintedShipmentDiscount;
+namespace Aras\ShipmentDiscount;
 
 /**
  * Class Calculations contains methods for calculating discounts on shipments.

@@ -6,11 +6,11 @@
 
 declare(strict_types=1);
 
-namespace Aras\VintedShipmentDiscount;
+namespace Aras\ShipmentDiscount;
 
-use Aras\VintedShipmentDiscount\FileReader;
-use Aras\VintedShipmentDiscount\DataValidation;
-use Aras\VintedShipmentDiscount\Calculations;
+use Aras\ShipmentDiscount\FileReader;
+use Aras\ShipmentDiscount\DataValidation;
+use Aras\ShipmentDiscount\Calculations;
 
 /**
  * Class Control controls all pats of the solution.

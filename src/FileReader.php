@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Aras\VintedShipmentDiscount;
+namespace Aras\ShipmentDiscount;
 
 /**
  * Class FileReader reads data from the file.

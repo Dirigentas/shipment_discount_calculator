@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+namespace Aras\ShipmentDiscountTests;
+
 use PHPUnit\Framework\TestCase;
-use Aras\VintedShipmentDiscount\DataValidation;
+use Aras\ShipmentDiscount\DataValidation;
 
 /**
  * Test case for the DataValidation class
@@ -74,5 +76,3 @@ final class DataValidationTest extends TestCase
         ], $result);
     }
 }
-
-?>

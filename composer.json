@@ -7,7 +7,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Aras\\VintedShipmentDiscount\\": "src/"
+            "Aras\\ShipmentDiscount\\": "src/",
+            "Aras\\ShipmentDiscountTests\\": "tests/"
         }
     },
     "authors": [
@@ -17,7 +18,7 @@
     ],
     "scripts": {
         "start": "php public/index.php",
-        "tests": "./vendor/bin/phpunit tests"
+        "test": "./vendor/bin/phpunit tests"
     },
     "config": {
         "process-timeout": 300,

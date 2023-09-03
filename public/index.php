@@ -14,11 +14,9 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Aras\VintedShipmentDiscount\Control;
+use Aras\ShipmentDiscount\Control;
 
 /**
  * Starts the solution.
  */
-(new Control)->executeAndWriteToStdout();
-
-?>
+(new Control())->executeAndWriteToStdout();
