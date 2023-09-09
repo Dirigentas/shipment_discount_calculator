@@ -19,4 +19,4 @@ use Aras\ShipmentDiscount\Control;
 /**
  * Starts the solution.
  */
-(new Control())->executeAndWriteToStdout();
+(new Control())->executeAllClasses();

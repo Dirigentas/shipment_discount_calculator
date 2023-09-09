@@ -14,22 +14,6 @@ namespace Aras\ShipmentDiscount;
 class Calculations
 {
     /**
-     * Formats a given number.
-     *
-     * @param float $number The number to be formatted.
-     *
-     * @return string|float Returns '-' if the number is 0, otherwise with 2 decimal places.
-     */
-    public static function numberFormat(float $number): string|float
-    {
-        if ($number == 0) {
-            return '-';
-        } else {
-            return number_format($number, 2);
-        }
-    }
-
-    /**
      * Adds all prices and applies a discount to the chosen package size.
      *
      * @param array $output       The array of transactions to be processed.
@@ -63,11 +47,9 @@ class Calculations
                     foreach ($prices as $size => $price) {
                         if ($size === $splitTransaction[1]) {
                             if ($splitTransaction[1] === $packageSizeForRule) {
-                                $transaction .= ' ' . self::numberFormat($lowestPrice)
-                                . ' '
-                                . self::numberFormat($price - $lowestPrice);
+                                $transaction .= ' ' . $lowestPrice . ' ' . $price - $lowestPrice;
                             } else {
-                                $transaction .= ' ' . self::numberFormat($price) . ' -';
+                                $transaction .= ' ' . $price . ' ' . 0;
                             }
                         }
                     }
@@ -115,9 +97,9 @@ class Calculations
                 $freeTransactionNoCounter += 1;
 
                 if ($freeTransactionNoCounter === $freeTransactionNo) {
-                    $splitTransaction[3] = number_format(0, 2);
+                    $splitTransaction[3] = 0;
 
-                    $splitTransaction[4] = number_format($couriers[$providerForRule][$packageSizeForRule], 2);
+                    $splitTransaction[4] = $couriers[$providerForRule][$packageSizeForRule];
 
                     $transaction = implode(' ', $splitTransaction);
                 }
@@ -143,7 +125,7 @@ class Calculations
 
             if (
                 str_contains($transaction, 'Ignored')
-                || $splitTransaction[4] === '-'
+                || $splitTransaction[4] == 0
             ) {
                 continue;
             }
@@ -152,17 +134,11 @@ class Calculations
             @$totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] += $splitTransaction[4];
 
             if ($totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] > $monthlyDiscountLimit) {
-                $splitTransaction[3]
-                += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))]
+                $splitTransaction[3] += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))]
                 - $monthlyDiscountLimit;
 
-                $splitTransaction[4]
-                -= $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))]
+                $splitTransaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))]
                 - $monthlyDiscountLimit;
-
-                $splitTransaction[3] = number_format($splitTransaction[3], 2);
-
-                $splitTransaction[4] = self::numberFormat($splitTransaction[4]);
 
                 $transaction = implode(' ', $splitTransaction);
             }

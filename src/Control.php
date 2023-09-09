@@ -34,11 +34,11 @@ final class Control
     ];
 
     /**
-     * This method reads data from an input file, performs data verification and calculations, writes the output to stdout.
+     * This method executes all needed classes.
      *
      * @return void
      */
-    public function executeAndWriteToStdout(): void
+    public function executeAllClasses(): void
     {
         $input = FileReader::getFileData('input.txt');
 
@@ -50,6 +50,22 @@ final class Control
 
         $output = Calculations::limitsDiscounts($output);
 
+        $output = Formatting::formatShipmentPrice($output);
+
+        $output = Formatting::formatShipmentDiscount($output);
+
+        self::writeToStdout($output);
+    }
+
+    /**
+     * This method writes the $output to stdout.
+     * 
+     * @param $output The array of transactions with calculated discounts.
+     * 
+     * @return void
+     */
+    public static function writeToStdout(array $output): void
+    {
         $output = implode("\r\n", $output);
 
         $stdout = fopen('php://stdout', 'w');
