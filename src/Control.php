@@ -59,9 +59,9 @@ final class Control
 
     /**
      * This method writes the $output to stdout.
-     * 
+     *
      * @param $output The array of transactions with calculated discounts.
-     * 
+     *
      * @return void
      */
     public static function writeToStdout(array $output): void
