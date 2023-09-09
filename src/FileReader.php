@@ -23,6 +23,7 @@ class FileReader
     public static function getFileData(string $fileName): array
     {
         $input = explode("\r\n", file_get_contents('./public/' . $fileName));
+        // $input = explode("\r\n", file_get_contents('./../public/' . $fileName));
 
         return $input;
     }

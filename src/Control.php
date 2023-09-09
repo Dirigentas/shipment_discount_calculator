@@ -18,9 +18,9 @@ use Aras\ShipmentDiscount\Calculations;
 final class Control
 {
      /**
-      * @var array $controlPanel An associative array containing the settings for couriers.
+      * @var array $couriers An associative array containing the settings for couriers.
       */
-    private $controlPanel = [
+    private $couriers = [
         'LP' => [
             'S' => 1.5,
             'M' => 4.9,
@@ -42,11 +42,11 @@ final class Control
     {
         $input = FileReader::getFileData('input.txt');
 
-        $output = DataValidation::dataVerification($input, $this->controlPanel);
+        $output = DataValidation::dataVerification($input, $this->couriers);
 
-        $output = Calculations::matchLowestProviderPrice($output, $this->controlPanel);
+        $output = Calculations::matchLowestProviderPrice($output, $this->couriers);
 
-        $output = Calculations::freeOncePerMonth($output, $this->controlPanel);
+        $output = Calculations::freeOncePerMonth($output, $this->couriers);
 
         $output = Calculations::limitsDiscounts($output);
 

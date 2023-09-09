@@ -17,32 +17,29 @@ class DataValidation
       * Verifies the input data and returns an array of verified output.
       *
       * @param array $input        An array of transactions.
-      * @param array $controlPanel An array containing the settings for couriers,package sizes, prices.
+      * @param array $couriers An array containing the settings for couriers,package sizes, prices.
       *
       * @return array An array of checked and ignored transactions.
       */
-    public static function dataVerification(array $input, array $controlPanel): array
+    public static function dataVerification(array $input, array $couriers): array
     {
         // Regular expression to match valid ISO 8601 date format (YYYY-MM-DD)
         $isoPattern = "/^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/";
 
-        $output = [];
 
-        foreach ($input as $transaction) {
+        foreach ($input as &$transaction) {
             $splitUpTransaction = explode(' ', $transaction);
 
             if (
-                count($splitUpTransaction) == 3
+                !(count($splitUpTransaction) == 3
                 && preg_match($isoPattern, $splitUpTransaction[0])
-                && in_array($splitUpTransaction[1], array_keys($controlPanel[array_key_first($controlPanel)]))
-                && in_array(trim($splitUpTransaction[2]), array_keys($controlPanel))
+                && in_array($splitUpTransaction[1], array_keys($couriers[array_key_first($couriers)]))
+                && in_array(trim($splitUpTransaction[2]), array_keys($couriers)))
             ) {
-                $output[] = $transaction;
-            } else {
-                $output[] = $transaction . ' Ignored';
+                $transaction .= ' Ignored';
             }
         }
 
-        return $output;
+        return $input;
     }
 }

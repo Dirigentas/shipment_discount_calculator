@@ -33,18 +33,18 @@ class Calculations
      * Adds all prices and applies a discount to the chosen package size.
      *
      * @param array $output       The array of transactions to be processed.
-     * @param array $controlPanel Contains the courier and package size information.
+     * @param array $couriers Contains the courier and package size information.
      *
      * @return array Array of transactions with the S package discount applied.
      */
-    public static function matchLowestProviderPrice(array $output, array $controlPanel): array
+    public static function matchLowestProviderPrice(array $output, array $couriers): array
     {
         // Control panel, can modify the $packageSizeForRule variable.
         $packageSizeForRule = 'S';
 
         // Finds the lowest price from chosen package size
         $lowestPrice = INF;
-        foreach ($controlPanel as $courier => $price) {
+        foreach ($couriers as $courier => $price) {
             if ($price[$packageSizeForRule] < $lowestPrice) {
                 $lowestPrice = $price[$packageSizeForRule];
             }
@@ -58,7 +58,7 @@ class Calculations
 
             $splitTransaction = explode(' ', $transaction);
 
-            foreach ($controlPanel as $courier => $prices) {
+            foreach ($couriers as $courier => $prices) {
                 if ($courier === trim($splitTransaction[2])) {
                     foreach ($prices as $size => $price) {
                         if ($size === $splitTransaction[1]) {
@@ -81,11 +81,11 @@ class Calculations
      * Applies a free shipment once per month to the chosen provider, size.
      *
      * @param array $output       The array of transactions to be processed.
-     * @param array $controlPanel Contains the courier and package size information.
+     * @param array $couriers Contains the courier and package size information.
      *
      * @return array Array of transactions with the L package discount applied.
      */
-    public static function freeOncePerMonth(array $output, array $controlPanel): array
+    public static function freeOncePerMonth(array $output, array $couriers): array
     {
         // Control panel, can modify all variables.
         $freeTransactionNo = 3;
@@ -117,7 +117,7 @@ class Calculations
                 if ($freeTransactionNoCounter === $freeTransactionNo) {
                     $splitTransaction[3] = number_format(0, 2);
 
-                    $splitTransaction[4] = number_format($controlPanel[$providerForRule][$packageSizeForRule], 2);
+                    $splitTransaction[4] = number_format($couriers[$providerForRule][$packageSizeForRule], 2);
 
                     $transaction = implode(' ', $splitTransaction);
                 }
