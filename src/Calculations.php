@@ -14,12 +14,12 @@ namespace Aras\ShipmentDiscount;
 class Calculations
 {
     /**
-     * Adds all prices and applies a discount to the chosen package size.
+     * Applies a discount to the chosen package size.
      *
-     * @param array $output       The array of transactions to be processed.
-     * @param array $couriers Contains the courier and package size information.
+     * @param array[] $output   The array of transactions to be processed.
+     * @param array[] $couriers Contains the courier and package size information.
      *
-     * @return array Array of transactions with the S package discount applied.
+     * @return array[] Array of transactions with the S package discount applied.
      */
     public static function matchLowestProviderPrice(array $output, array $couriers): array
     {
@@ -34,22 +34,18 @@ class Calculations
             }
         }
 
-        // Adds all prices and chosen size package discounts
         foreach ($output as $key => &$transaction) {
-            if (str_contains($transaction, 'Ignored')) {
+            if (in_array('Ignored', $transaction)) {
                 continue;
             }
 
-            $splitTransaction = explode(' ', $transaction);
-
             foreach ($couriers as $courier => $prices) {
-                if ($courier === trim($splitTransaction[2])) {
+                if ($courier === $transaction[2]) {
                     foreach ($prices as $size => $price) {
-                        if ($size === $splitTransaction[1]) {
-                            if ($splitTransaction[1] === $packageSizeForRule) {
-                                $transaction .= ' ' . $lowestPrice . ' ' . $price - $lowestPrice;
-                            } else {
-                                $transaction .= ' ' . $price . ' ' . 0;
+                        if ($size === $transaction[1]) {
+                            if ($transaction[1] === $packageSizeForRule) {
+                                $transaction[3] = $lowestPrice;
+                                $transaction[4] = $price - $lowestPrice;
                             }
                         }
                     }
@@ -62,10 +58,10 @@ class Calculations
     /**
      * Applies a free shipment once per month to the chosen provider, size.
      *
-     * @param array $output       The array of transactions to be processed.
-     * @param array $couriers Contains the courier and package size information.
+     * @param array[] $output       The array of transactions to be processed.
+     * @param array[] $couriers Contains the courier and package size information.
      *
-     * @return array Array of transactions with the L package discount applied.
+     * @return array[] Array of transactions with the L package discount applied.
      */
     public static function freeOncePerMonth(array $output, array $couriers): array
     {
@@ -79,29 +75,25 @@ class Calculations
         $oneFreeCounter = [];
 
         foreach ($output as &$transaction) {
-            if (str_contains($transaction, 'Ignored')) {
+            if (in_array('Ignored', $transaction)) {
                 continue;
             }
 
-            $splitTransaction = explode(' ', $transaction);
-
             if (
-                trim($splitTransaction[2]) === $providerForRule
-                && trim($splitTransaction[1]) === $packageSizeForRule
+                $transaction[2] === $providerForRule
+                && $transaction[1] === $packageSizeForRule
             ) {
-                if (!in_array(date('Y n', strtotime($splitTransaction[0])), $oneFreeCounter)) {
-                    $oneFreeCounter[] = date('Y n', strtotime($splitTransaction[0]));
+                if (!in_array(date('Y n', strtotime($transaction[0])), $oneFreeCounter)) {
+                    $oneFreeCounter[] = date('Y n', strtotime($transaction[0]));
                     $freeTransactionNoCounter = 0;
                 }
 
                 $freeTransactionNoCounter += 1;
 
                 if ($freeTransactionNoCounter === $freeTransactionNo) {
-                    $splitTransaction[3] = 0;
+                    $transaction[3] = 0;
 
-                    $splitTransaction[4] = $couriers[$providerForRule][$packageSizeForRule];
-
-                    $transaction = implode(' ', $splitTransaction);
+                    $transaction[4] = $couriers[$providerForRule][$packageSizeForRule];
                 }
             }
         }
@@ -111,9 +103,9 @@ class Calculations
     /**
      * Applies monthly limits to discounts for a given set of transactions.
      *
-     * @param array $output The array of transactions to be processed.
+     * @param array[] $output The array of transactions to be processed.
      *
-     * @return array Returns an array of transactions with the limited discounts.
+     * @return array[] Returns an array of transactions with the limited discounts.
      */
     public static function limitsDiscounts(array $output): array
     {
@@ -121,26 +113,22 @@ class Calculations
         $monthlyDiscountLimit = 10;
 
         foreach ($output as $key => &$transaction) {
-            $splitTransaction = explode(' ', $transaction);
-
             if (
-                str_contains($transaction, 'Ignored')
-                || $splitTransaction[4] == 0
+                in_array('Ignored', $transaction)
+                || $transaction[4] == 0
             ) {
                 continue;
             }
 
             // not a good practise to place '@', but I did it to lower the amount of code
-            @$totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] += $splitTransaction[4];
+            @$totalMonthsDiscount[date('Y n', strtotime($transaction[0]))] += $transaction[4];
 
-            if ($totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))] > $monthlyDiscountLimit) {
-                $splitTransaction[3] += $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))]
+            if ($totalMonthsDiscount[date('Y n', strtotime($transaction[0]))] > $monthlyDiscountLimit) {
+                $transaction[3] += $totalMonthsDiscount[date('Y n', strtotime($transaction[0]))]
                 - $monthlyDiscountLimit;
 
-                $splitTransaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($splitTransaction[0]))]
+                $transaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($transaction[0]))]
                 - $monthlyDiscountLimit;
-
-                $transaction = implode(' ', $splitTransaction);
             }
         }
         return $output;

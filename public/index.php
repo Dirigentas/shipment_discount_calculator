@@ -7,7 +7,7 @@
  *
  * @author  Aras
  * @license http://opensource.org/licenses/MIT MIT License
- * @link    private repository
+ * @link    https://github.com/Dirigentas/shipment_discount_calculator
  */
 
 declare(strict_types=1);

@@ -23,8 +23,22 @@ class FileReader
     public static function getFileData(string $fileName): array
     {
         $input = explode("\r\n", file_get_contents('./public/' . $fileName));
-        // $input = explode("\r\n", file_get_contents('./../public/' . $fileName));
 
+        return $input;
+    }
+
+    /**
+     * Explodes transactions from strings to arrays.
+     *
+     * @param array $input An array of string transactions.
+     *
+     * @return array[] An array of array transactions.
+     */
+    public static function makeTransactionArray(array $input): array
+    {
+        foreach ($input as &$transaction) {
+            $transaction = explode(' ', $transaction);
+        }
         return $input;
     }
 }

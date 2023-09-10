@@ -42,7 +42,11 @@ final class Control
     {
         $input = FileReader::getFileData('input.txt');
 
+        $input = FileReader::makeTransactionArray($input);
+
         $output = DataValidation::dataVerification($input, $this->couriers);
+
+        $output = DataValidation::addShipmentPrices($output, $this->couriers);
 
         $output = Calculations::matchLowestProviderPrice($output, $this->couriers);
 
@@ -66,6 +70,10 @@ final class Control
      */
     public static function writeToStdout(array $output): void
     {
+        foreach ($output as &$transaction) {
+            $transaction = implode(' ', $transaction);
+        }
+
         $output = implode("\r\n", $output);
 
         $stdout = fopen('php://stdout', 'w');

@@ -16,22 +16,18 @@ class Formatting
     /**
      * Reads data from a file and formats shipment prices.
      *
-     * @param array $output Array with unformated shipment prices.
+     * @param array[] $output Array with unformated shipment prices.
      *
-     * @return array Array of transactions with formatted shipment prices.
+     * @return array[] Array of transactions with formatted shipment prices.
      */
     public static function formatShipmentPrice(array $output): array
     {
         foreach ($output as &$transaction) {
-            $splitTransaction = explode(' ', $transaction);
-
-            if (count($splitTransaction) != 5) {
+            if (in_array('Ignored', $transaction)) {
                 continue;
             }
 
-            $splitTransaction[3] = number_format((float) $splitTransaction[3], 2);
-
-            $transaction = implode(' ', $splitTransaction);
+            $transaction[3] = number_format($transaction[3], 2);
         }
         return $output;
     }
@@ -39,25 +35,22 @@ class Formatting
     /**
      * Reads data from a file and formats discounts.
      *
-     * @param array $output Array with unformated discounts.
+     * @param array[] $output Array with unformated discounts.
      *
-     * @return array Array of transactions with formatted discounts.
+     * @return array[] Array of transactions with formatted discounts.
      */
     public static function formatShipmentDiscount(array $output): array
     {
         foreach ($output as &$transaction) {
-            $splitTransaction = explode(' ', $transaction);
-
-            if (count($splitTransaction) != 5) {
+            if (in_array('Ignored', $transaction)) {
                 continue;
             }
 
-            if ($splitTransaction[4] == 0) {
-                $splitTransaction[4] = '-';
+            if ($transaction[4] == 0) {
+                $transaction[4] = '-';
             } else {
-                $splitTransaction[4] = number_format((float) $splitTransaction[4], 2);
+                $transaction[4] = number_format($transaction[4], 2);
             }
-            $transaction = implode(' ', $splitTransaction);
         }
         return $output;
     }
