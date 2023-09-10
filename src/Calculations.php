@@ -126,9 +126,11 @@ class Calculations
             if ($totalMonthsDiscount[date('Y n', strtotime($transaction[0]))] > $monthlyDiscountLimit) {
                 $transaction[3] += $totalMonthsDiscount[date('Y n', strtotime($transaction[0]))]
                 - $monthlyDiscountLimit;
-
+                $transaction[3] = round($transaction[3], 2);
+                
                 $transaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($transaction[0]))]
                 - $monthlyDiscountLimit;
+                $transaction[4] = round($transaction[4], 2);
             }
         }
         return $output;

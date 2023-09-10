@@ -14,30 +14,32 @@ namespace Aras\ShipmentDiscount;
 class FileReader
 {
     /**
-     * Reads data from a file and processes it.
+     * Reads data from a file.
      *
      * @param string $fileName The name of the file to read data from.
      *
-     * @return array Array of transactions from input.txt.
+     * @return string String of transactions from input.txt.
      */
-    public static function getFileData(string $fileName): array
+    public static function getFileData(string $fileName): string
     {
-        $input = explode("\r\n", file_get_contents('./public/' . $fileName));
+        $input = file_get_contents('./public/' . $fileName);
 
         return $input;
     }
 
     /**
-     * Explodes transactions from strings to arrays.
+     * Explodes string of transactions to array of arrays.
      *
-     * @param array $input An array of string transactions.
+     * @param string $input String of transactions.
      *
      * @return array[] An array of array transactions.
      */
-    public static function makeTransactionArray(array $input): array
+    public static function makeTransactionArray(string $input): array
     {
+        $input = explode("\r\n", $input);
+
         foreach ($input as &$transaction) {
-            $transaction = explode(' ', $transaction);
+            $transaction = explode(" ", $transaction);
         }
         return $input;
     }
