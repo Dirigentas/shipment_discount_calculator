@@ -97,7 +97,6 @@ class Calculations
                 }
             }
         }
-        print_r($output);
         return $output;
     }
 
