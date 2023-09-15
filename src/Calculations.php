@@ -17,18 +17,18 @@ class Calculations
      * Applies a discount to the chosen package size.
      *
      * @param array[] $output   The array of transactions to be processed.
-     * @param array[] $couriers Contains the courier and package size information.
+     * @param array[] $couriersDetails Contains the courier and package size information.
      *
      * @return array[] Array of transactions with the S package discount applied.
      */
-    public static function matchLowestProviderPrice(array $output, array $couriers): array
+    public static function matchLowestProviderPrice(array $output, array $couriersDetails): array
     {
         // Control panel, can modify the $packageSizeForRule variable.
         $packageSizeForRule = 'S';
 
         // Finds the lowest price from chosen package size
         $lowestPrice = INF;
-        foreach ($couriers as $courier => $price) {
+        foreach ($couriersDetails as $courier => $price) {
             if ($price[$packageSizeForRule] < $lowestPrice) {
                 $lowestPrice = $price[$packageSizeForRule];
             }
@@ -39,13 +39,13 @@ class Calculations
                 continue;
             }
 
-            foreach ($couriers as $courier => $prices) {
-                if ($courier === $transaction[2]) {
+            foreach ($couriersDetails as $courier => $prices) {
+                if ($courier === $transaction['transactionCourier']) {
                     foreach ($prices as $size => $price) {
-                        if ($size === $transaction[1]) {
-                            if ($transaction[1] === $packageSizeForRule) {
-                                $transaction[3] = $lowestPrice;
-                                $transaction[4] = $price - $lowestPrice;
+                        if ($size === $transaction['transactionSize']) {
+                            if ($transaction['transactionSize'] === $packageSizeForRule) {
+                                $transaction['transactionPrice'] = $lowestPrice;
+                                $transaction['transactionDiscount'] = $price - $lowestPrice;
                             }
                         }
                     }
@@ -59,11 +59,11 @@ class Calculations
      * Applies a free shipment once per month to the chosen provider, size.
      *
      * @param array[] $output       The array of transactions to be processed.
-     * @param array[] $couriers Contains the courier and package size information.
+     * @param array[] $couriersDetails Contains the courier and package size information.
      *
      * @return array[] Array of transactions with the L package discount applied.
      */
-    public static function freeOncePerMonth(array $output, array $couriers): array
+    public static function freeOncePerMonth(array $output, array $couriersDetails): array
     {
         // Control panel, can modify all variables.
         $freeTransactionNo = 3;
@@ -80,23 +80,24 @@ class Calculations
             }
 
             if (
-                $transaction[2] === $providerForRule
-                && $transaction[1] === $packageSizeForRule
+                $transaction['transactionCourier'] === $providerForRule
+                && $transaction['transactionSize'] === $packageSizeForRule
             ) {
-                if (!in_array(date('Y n', strtotime($transaction[0])), $oneFreeCounter)) {
-                    $oneFreeCounter[] = date('Y n', strtotime($transaction[0]));
+                if (!in_array(date('Y n', strtotime($transaction['transactionDate'])), $oneFreeCounter)) {
+                    $oneFreeCounter[] = date('Y n', strtotime($transaction['transactionDate']));
                     $freeTransactionNoCounter = 0;
                 }
 
                 $freeTransactionNoCounter += 1;
 
                 if ($freeTransactionNoCounter === $freeTransactionNo) {
-                    $transaction[3] = 0;
+                    $transaction['transactionPrice'] = 0;
 
-                    $transaction[4] = $couriers[$providerForRule][$packageSizeForRule];
+                    $transaction['transactionDiscount'] = $couriersDetails[$providerForRule][$packageSizeForRule];
                 }
             }
         }
+        print_r($output);
         return $output;
     }
 
@@ -115,22 +116,22 @@ class Calculations
         foreach ($output as $key => &$transaction) {
             if (
                 in_array('Ignored', $transaction)
-                || $transaction[4] == 0
+                || $transaction['transactionDiscount'] == 0
             ) {
                 continue;
             }
 
             // not a good practise to place '@', but I did it to lower the amount of code
-            @$totalMonthsDiscount[date('Y n', strtotime($transaction[0]))] += $transaction[4];
+            @$totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))] += $transaction['transactionDiscount'];
 
-            if ($totalMonthsDiscount[date('Y n', strtotime($transaction[0]))] > $monthlyDiscountLimit) {
-                $transaction[3] += $totalMonthsDiscount[date('Y n', strtotime($transaction[0]))]
+            if ($totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))] > $monthlyDiscountLimit) {
+                $transaction['transactionPrice'] += $totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))]
                 - $monthlyDiscountLimit;
-                $transaction[3] = round($transaction[3], 2);
+                $transaction['transactionPrice'] = round($transaction['transactionPrice'], 2);
                 
-                $transaction[4] -= $totalMonthsDiscount[date('Y n', strtotime($transaction[0]))]
+                $transaction['transactionDiscount'] -= $totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))]
                 - $monthlyDiscountLimit;
-                $transaction[4] = round($transaction[4], 2);
+                $transaction['transactionDiscount'] = round($transaction['transactionDiscount'], 2);
             }
         }
         return $output;

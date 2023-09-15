@@ -27,7 +27,7 @@ class Formatting
                 continue;
             }
 
-            $transaction[3] = number_format($transaction[3], 2);
+            $transaction['transactionPrice'] = number_format($transaction['transactionPrice'], 2);
         }
         return $output;
     }
@@ -46,10 +46,10 @@ class Formatting
                 continue;
             }
 
-            if ($transaction[4] == 0) {
-                $transaction[4] = '-';
+            if ($transaction['transactionDiscount'] == 0) {
+                $transaction['transactionDiscount'] = '-';
             } else {
-                $transaction[4] = number_format($transaction[4], 2);
+                $transaction['transactionDiscount'] = number_format($transaction['transactionDiscount'], 2);
             }
         }
         return $output;

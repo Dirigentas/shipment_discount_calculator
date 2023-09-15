@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File purpose is to make adjustments to couriers and call all required methods.
+ * File purpose is to make adjustments to $couriersDetails and call all required methods.
  */
 
 declare(strict_types=1);
@@ -18,9 +18,9 @@ use Aras\ShipmentDiscount\Calculations;
 final class Control
 {
      /**
-      * @var array $couriers An associative array containing the settings for couriers.
+      * @var array $couriersDetails An associative array containing the settings for couriers details.
       */
-    private $couriers = [
+    private $couriersDetails = [
         'LP' => [
             'S' => 1.5,
             'M' => 4.9,
@@ -34,6 +34,11 @@ final class Control
     ];
 
     /**
+     * @var array $inputDataStructure Array of input data names.
+     */
+    private $inputDataStructure = ['transactionDate', 'transactionSize', 'transactionCourier'];
+
+    /**
      * This method executes all needed classes.
      *
      * @return void
@@ -44,13 +49,13 @@ final class Control
 
         $input = FileReader::makeTransactionArray($input);
 
-        $output = DataValidation::dataVerification($input, $this->couriers);
+        $output = DataValidation::dataVerification($input, $this->couriersDetails, $this->inputDataStructure);
 
-        $output = DataValidation::addShipmentPrices($output, $this->couriers);
+        $output = DataValidation::addShipmentPrices($output, $this->couriersDetails);
 
-        $output = Calculations::matchLowestProviderPrice($output, $this->couriers);
+        $output = Calculations::matchLowestProviderPrice($output, $this->couriersDetails);
 
-        $output = Calculations::freeOncePerMonth($output, $this->couriers);
+        $output = Calculations::freeOncePerMonth($output, $this->couriersDetails);
 
         $output = Calculations::limitsDiscounts($output);
 

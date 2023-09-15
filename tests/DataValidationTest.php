@@ -50,7 +50,8 @@ final class DataValidationTest extends TestCase
                 'M' => 3,
                 'L' => 4
             ]
-        ]);
+        ], ['transactionDate', 'transactionSize', 'transactionCourier']);
+
         $this->assertEquals([
             ['2015-02-01', 'S', 'MR'],
             ['2015-02-02', 'S', 'MR'],
@@ -115,6 +116,7 @@ final class DataValidationTest extends TestCase
                 'L' => 4
             ]
         ]);
+        
         $this->assertEquals([
             ['2015-02-01', 'S', 'MR', 2, 0],
             ['2015-02-02', 'S', 'MR', 2, 0],
