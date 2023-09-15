@@ -10,7 +10,9 @@ namespace Aras\ShipmentDiscount;
 
 use Aras\ShipmentDiscount\FileReader;
 use Aras\ShipmentDiscount\DataValidation;
-use Aras\ShipmentDiscount\Calculations;
+use Aras\ShipmentDiscount\calculations\LowestPriceFinder;
+use Aras\ShipmentDiscount\calculations\MonthlyPromotion;
+use Aras\ShipmentDiscount\calculations\DiscountLimiter;
 
 /**
  * Class Control controls all pats of the solution.
@@ -53,11 +55,11 @@ final class Control
 
         $output = DataValidation::addShipmentPrices($output, $this->couriersDetails);
 
-        $output = Calculations::matchLowestProviderPrice($output, $this->couriersDetails);
+        $output = LowestPriceFinder::matchLowestProviderPrice($output, $this->couriersDetails);
 
-        $output = Calculations::freeOncePerMonth($output, $this->couriersDetails);
+        $output = MonthlyPromotion::freeOncePerMonth($output, $this->couriersDetails);
 
-        $output = Calculations::limitsDiscounts($output);
+        $output = DiscountLimiter::limitsDiscounts($output);
 
         $output = Formatting::formatShipmentPrice($output);
 
