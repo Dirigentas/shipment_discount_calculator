@@ -56,7 +56,7 @@ class DataValidation
      */
     public static function addShipmentPrices(array $output, array $couriersDetails): array
     {
-        foreach ($output as $key => &$transaction) {
+        foreach ($output as &$transaction) {
             if (in_array('Ignored', $transaction)) {
                 continue;
             }

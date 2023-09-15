@@ -40,14 +40,14 @@ class Calculations
             }
 
             foreach ($couriersDetails as $courier => $prices) {
-                if ($courier === $transaction['transactionCourier']) {
-                    foreach ($prices as $size => $price) {
-                        if ($size === $transaction['transactionSize']) {
-                            if ($transaction['transactionSize'] === $packageSizeForRule) {
-                                $transaction['transactionPrice'] = $lowestPrice;
-                                $transaction['transactionDiscount'] = $price - $lowestPrice;
-                            }
-                        }
+                foreach ($prices as $size => $price) {
+                    if (
+                        $courier === $transaction['transactionCourier']
+                        && $size === $transaction['transactionSize']
+                        && $transaction['transactionSize'] === $packageSizeForRule
+                    ) {
+                        $transaction['transactionPrice'] = $lowestPrice;
+                        $transaction['transactionDiscount'] = $price - $lowestPrice;
                     }
                 }
             }
@@ -124,12 +124,12 @@ class Calculations
             @$totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))] += $transaction['transactionDiscount'];
 
             if ($totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))] > $monthlyDiscountLimit) {
-                $transaction['transactionPrice'] += $totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))]
-                - $monthlyDiscountLimit;
+                $transaction['transactionPrice'] += $totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))] - $monthlyDiscountLimit;
+
                 $transaction['transactionPrice'] = round($transaction['transactionPrice'], 2);
                 
-                $transaction['transactionDiscount'] -= $totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))]
-                - $monthlyDiscountLimit;
+                $transaction['transactionDiscount'] -= $totalMonthsDiscount[date('Y n', strtotime($transaction['transactionDate']))] - $monthlyDiscountLimit;
+                
                 $transaction['transactionDiscount'] = round($transaction['transactionDiscount'], 2);
             }
         }
