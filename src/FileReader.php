@@ -36,7 +36,8 @@ class FileReader
      */
     public static function makeTransactionArray(string $input): array
     {
-        $input = explode("\r\n", $input);
+        $input = explode("\n", $input); // Linux
+        // $input = explode("\r\n", $input); Windows
 
         foreach ($input as &$transaction) {
             $transaction = explode(" ", $transaction);
